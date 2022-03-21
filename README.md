@@ -34,29 +34,33 @@ Lab Test Result Distribution (see Exhibit 2)
 Disease History Distribution (see Exhibit 3)  
 Correlation Matrix
 From the correlation matrix, it indicated the *Death Event is highly correlated with serum creatinine, age, serum sodium, ejection fraction.*  
-<img width="367" alt="Screen Shot 2022-03-20 at 9 29 39 PM" src="https://user-images.githubusercontent.com/70663111/159195178-c5559bba-e9e1-4bcd-9319-c1e83464ee7e.png">
-
-<img width="372" alt="Screen Shot 2022-03-20 at 9 29 29 PM" src="https://user-images.githubusercontent.com/70663111/159195182-bd5f63d8-5a4f-4a28-8703-3bbb3b8461c2.png">
+<img width="638" alt="Screen Shot 2022-03-20 at 9 36 23 PM" src="https://user-images.githubusercontent.com/70663111/159195464-e5288122-47f8-44a3-b25a-27fda2748489.png">
 
 Based on this, we create a scatter plot to dive further into the correlations within those variables.(see scatter chart in the up right). We found that there are no variables highly correlated ( either positive or negative) with each other, which means we can take those independent variables into further analysis.
 
 **Logistic Regression**  
 After learning about the relationships between independent variables, we selected all variables as the predictors and randomly selected training and testing data sets to perform and verify a logistic regression model that helps us understand the impacts of the variables on variable DEATH_EVENT. The difference between residual deviance and null deviance has shown the variables have improved the effectiveness of this model. 
+<img width="381" alt="Screen Shot 2022-03-20 at 9 36 35 PM" src="https://user-images.githubusercontent.com/70663111/159195471-b48c8c53-a800-49dd-b929-6783adca1617.png">
 
 We used the logistic regression model to predict the probability that one will die, for each person in the testing data set. To better understand who should be warned about their risk in having death caused by heart failures, we tried to classify the predictions as “risk” or “mild risk” using a threshold that provides the best accuracy. By cross-tabulating our predictions with respect to actual DEATH_EVENT, we find that the differences between the accuracies of the three potential thresholds are very small. 
+<img width="622" alt="Screen Shot 2022-03-20 at 9 36 46 PM" src="https://user-images.githubusercontent.com/70663111/159195482-82b554bd-819d-45c1-a87c-53758c1a7ff5.png">
 
 **K-Nearest Neighbor**
 In this part, we use K-Nearest Neighbors(KNN) to get our prediction about whether a person with specific characters is likely to die. The reason we choose KNN is that we do not have assumptions on the model before we make our prediction, which helps us gain more flexible predictions. In our experiment, we use “age”, “anaemia”, “creatinine_phosphosphokinase”, “diabetes”, “ejection_fraction”, “high_blood_pressure”, “platelets”, “serum_creatinine”, “serum_sodium”, “sex”, “smoking”, and “time” as our predictors and our prediction Y is “DEATH_EVENT”, where “1” stands for death and “0” stands for living. Then we randomly select half of the data as training data and the rest as test data. We have examined k from 1 to 12 and checked each model’s accuracy to find the best model. The following is our output:  
 
-From the result, we get the best KNN model that is 68 percent accurate when K=9. Every time we have a new patient and his detailed data, we can put the data into this model, then R will find 9 closest neighbors in our training data and give us a predicted result. However, this model still needs to be refined to improve its accuracy if we want to use it in real life.
- 
+From the result, we get the best KNN model that is 68 percent accurate when K=9. Every time we have a new patient and his detailed data, we can put the data into this model, then R will find 9 closest neighbors in our training data and give us a predicted result. However, this model still needs to be refined to improve its accuracy if we want to use it in real life. 
+<img width="628" alt="Screen Shot 2022-03-20 at 9 36 56 PM" src="https://user-images.githubusercontent.com/70663111/159195491-69c98960-5d37-40df-a947-7eebfdafac79.png"> 
 
 **Decision Trees**
-We also use the decision tree to conduct our prediction about whether a person will die, which is easier to explain and understand. In this process, we randomly select half of the data as training data and the rest as test data. The predictors are the same as 12 predictors we used in our KNN model, but the output is DEATH, in which “Yes” stands for death and “No” stands for living. At first, we created a decision tree:
-
-In order to avoid the overfitting problem and get a smaller tree for people to use, we use the cross-validation method to prune this initial decision tree. During this process, we find that when the size=5, we have the smallest deviation, which means our best decision tree has a size of 6.
+We also use the decision tree to conduct our prediction about whether a person will die, which is easier to explain and understand. In this process, we randomly select half of the data as training data and the rest as test data. The predictors are the same as 12 predictors we used in our KNN model, but the output is DEATH, in which “Yes” stands for death and “No” stands for living. At first, we created a decision tree: 
+<img width="673" alt="Screen Shot 2022-03-20 at 9 37 08 PM" src="https://user-images.githubusercontent.com/70663111/159195502-fe708768-2e0a-431f-aeef-c1196a60484a.png">
+Exam accuracy using test data: 
+<img width="626" alt="Screen Shot 2022-03-20 at 9 37 21 PM" src="https://user-images.githubusercontent.com/70663111/159195510-116d166f-8ab4-48ba-b5d1-c187c9636b49.png">
+In order to avoid the overfitting problem and get a smaller tree for people to use, we use the cross-validation method to prune this initial decision tree. During this process, we find that when the size=5, we have the smallest deviation, which means our best decision tree has a size of 6. 
+<img width="486" alt="Screen Shot 2022-03-20 at 9 37 33 PM" src="https://user-images.githubusercontent.com/70663111/159195515-aaafed6b-a513-4338-8dd9-ed9473e008c6.png">
 
 Then we print this decision tree and examine its accuracy:
+<img width="546" alt="Screen Shot 2022-03-20 at 9 37 46 PM" src="https://user-images.githubusercontent.com/70663111/159195527-937f1245-d821-4c79-823e-a8e78a70adb1.png">
 
 
 
@@ -70,3 +74,14 @@ From the logistic regression, we have 90% confidence that variables age, anaemia
 ## Reference
 Davide Chicco, Giuseppe Jurman: Machine learning can predict survival of patients with heart failure from serum creatinine and ejection fraction alone. BMC Medical Informatics and Decision Making 20, 16 (2020). (link)t-sheets/detail/cardiovascular-diseases-(cvds) 
 World Health Organization. (n.d.). Cardiovascular diseases (cvds). World Health Organization. Retrieved December 18, 2021, from https://www.who.int/news-room/fac
+
+## Appendix
+Exhibit 1 
+<img width="643" alt="Screen Shot 2022-03-20 at 9 37 58 PM" src="https://user-images.githubusercontent.com/70663111/159195534-de1dc852-7e86-4843-932f-8ca25b00a62b.png">
+
+Exhibit 2 
+<img width="661" alt="Screen Shot 2022-03-20 at 9 38 22 PM" src="https://user-images.githubusercontent.com/70663111/159195550-88ca0ec4-c013-457f-8ddf-1205f5ad2aed.png">
+
+Exhibit 3 
+<img width="656" alt="Screen Shot 2022-03-20 at 9 38 32 PM" src="https://user-images.githubusercontent.com/70663111/159195557-e08028e7-00b9-494b-b4ce-0527775dc431.png">
+
