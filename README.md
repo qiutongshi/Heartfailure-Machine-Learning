@@ -64,6 +64,7 @@ Exam accuracy using test data:
 <img width="626" alt="Screen Shot 2022-03-20 at 9 37 21 PM" src="https://user-images.githubusercontent.com/70663111/159195510-116d166f-8ab4-48ba-b5d1-c187c9636b49.png">
 
 In order to avoid the overfitting problem and get a smaller tree for people to use, we use the cross-validation method to prune this initial decision tree. During this process, we find that when the size=5, we have the smallest deviation, which means our best decision tree has a size of 6. 
+
 <img width="486" alt="Screen Shot 2022-03-20 at 9 37 33 PM" src="https://user-images.githubusercontent.com/70663111/159195515-aaafed6b-a513-4338-8dd9-ed9473e008c6.png">
 
 Then we print this decision tree and examine its accuracy:
