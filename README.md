@@ -34,7 +34,9 @@ Lab Test Result Distribution (see Exhibit 2)
 Disease History Distribution (see Exhibit 3)  
 Correlation Matrix
 From the correlation matrix, it indicated the *Death Event is highly correlated with serum creatinine, age, serum sodium, ejection fraction.*
+<img width="367" alt="Screen Shot 2022-03-20 at 9 29 39 PM" src="https://user-images.githubusercontent.com/70663111/159195178-c5559bba-e9e1-4bcd-9319-c1e83464ee7e.png">
 
+<img width="372" alt="Screen Shot 2022-03-20 at 9 29 29 PM" src="https://user-images.githubusercontent.com/70663111/159195182-bd5f63d8-5a4f-4a28-8703-3bbb3b8461c2.png">
 
 Based on this, we create a scatter plot to dive further into the correlations within those variables.(see scatter chart in the up right). We found that there are no variables highly correlated ( either positive or negative) with each other, which means we can take those independent variables into further analysis.
 
