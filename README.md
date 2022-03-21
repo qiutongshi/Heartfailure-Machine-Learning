@@ -33,62 +33,40 @@ Demographic and Histology Distribution(see Exhibit 1)
 Lab Test Result Distribution (see Exhibit 2)  
 Disease History Distribution (see Exhibit 3)  
 Correlation Matrix
-From the correlation matrix, it indicated the *Death Event is highly correlated with serum creatinine, age, serum sodium, ejection fraction.*
+From the correlation matrix, it indicated the *Death Event is highly correlated with serum creatinine, age, serum sodium, ejection fraction.*  
 <img width="367" alt="Screen Shot 2022-03-20 at 9 29 39 PM" src="https://user-images.githubusercontent.com/70663111/159195178-c5559bba-e9e1-4bcd-9319-c1e83464ee7e.png">
 
 <img width="372" alt="Screen Shot 2022-03-20 at 9 29 29 PM" src="https://user-images.githubusercontent.com/70663111/159195182-bd5f63d8-5a4f-4a28-8703-3bbb3b8461c2.png">
 
 Based on this, we create a scatter plot to dive further into the correlations within those variables.(see scatter chart in the up right). We found that there are no variables highly correlated ( either positive or negative) with each other, which means we can take those independent variables into further analysis.
 
+**Logistic Regression**  
+After learning about the relationships between independent variables, we selected all variables as the predictors and randomly selected training and testing data sets to perform and verify a logistic regression model that helps us understand the impacts of the variables on variable DEATH_EVENT. The difference between residual deviance and null deviance has shown the variables have improved the effectiveness of this model. 
 
+We used the logistic regression model to predict the probability that one will die, for each person in the testing data set. To better understand who should be warned about their risk in having death caused by heart failures, we tried to classify the predictions as “risk” or “mild risk” using a threshold that provides the best accuracy. By cross-tabulating our predictions with respect to actual DEATH_EVENT, we find that the differences between the accuracies of the three potential thresholds are very small. 
 
-## Data Metrics
-- mean individual income 
-- median individual income
-- standard deviation of individual income
-- percentage of outliers: outliers of the two population who have extremelt high or extremely low income
-- skewneww of individual income: refers to assymtery in the gaussian distribution of the two population samples, indicates the likelihood of an event falling in the tails of probability distribution.
+**K-Nearest Neighbor**
+In this part, we use K-Nearest Neighbors(KNN) to get our prediction about whether a person with specific characters is likely to die. The reason we choose KNN is that we do not have assumptions on the model before we make our prediction, which helps us gain more flexible predictions. In our experiment, we use “age”, “anaemia”, “creatinine_phosphosphokinase”, “diabetes”, “ejection_fraction”, “high_blood_pressure”, “platelets”, “serum_creatinine”, “serum_sodium”, “sex”, “smoking”, and “time” as our predictors and our prediction Y is “DEATH_EVENT”, where “1” stands for death and “0” stands for living. Then we randomly select half of the data as training data and the rest as test data. We have examined k from 1 to 12 and checked each model’s accuracy to find the best model. The following is our output:  
 
-## Data Source
-[Oppurtunity Atlas](https://www.opportunityatlas.org)
+From the result, we get the best KNN model that is 68 percent accurate when K=9. Every time we have a new patient and his detailed data, we can put the data into this model, then R will find 9 closest neighbors in our training data and give us a predicted result. However, this model still needs to be refined to improve its accuracy if we want to use it in real life.
  
-## Data Analysis
-We will use python to answer: what is the mean, median, standard deviation, percentage of outliers, skewness of the two population?
 
-### Baltimore
-- mean: 23248.80
-- median: 22348.0
-- standard deviation: 4761.92
-- percentage of outliers: 1.16%
-- skewness: -1.06
-  
-<img width="505" alt="Screen Shot 2020-11-22 at 22 22 13" src="https://user-images.githubusercontent.com/70663111/99926873-39a8f480-2d11-11eb-9029-042a871bc7bd.png">
-The individual income of population in Baltimore is highly negatively skewed.
+**Decision Trees**
+We also use the decision tree to conduct our prediction about whether a person will die, which is easier to explain and understand. In this process, we randomly select half of the data as training data and the rest as test data. The predictors are the same as 12 predictors we used in our KNN model, but the output is DEATH, in which “Yes” stands for death and “No” stands for living. At first, we created a decision tree:
 
+In order to avoid the overfitting problem and get a smaller tree for people to use, we use the cross-validation method to prune this initial decision tree. During this process, we find that when the size=5, we have the smallest deviation, which means our best decision tree has a size of 6.
 
+Then we print this decision tree and examine its accuracy:
 
-### Los Angeles
-- mean: 26638.46
-- median: 26183.0
-- standard deviation: 4178.82
-- percentage of outliers: 3.02%
-- skewness: -0.96
-
-<img width="461" alt="Screen Shot 2020-11-22 at 22 27 07" src="https://user-images.githubusercontent.com/70663111/99927042-e1262700-2d11-11eb-881a-b1f30d6c0b4d.png">
-The individual income of population in Baltimore is moderately negatively skewed.
 
 
 ## Summary
-In general, the mean and median of both population agree with the different living standards (income & expense level) in Baltimore and Los Angeles. Both cities have
-larger median than mean because of outliers. In Baltimore, there is a smaller variety of individual income for those from lower socioeconomic class. It is more likely that a person's individual income is underperfoming compared
-with her socioeconomic group in Baltimore than in Los Angeles despite the fact that the highest individual income from Baltimore is far greater than that of Los Angeles.
+In this project, we used three different methods to analyze heart failure data. Using K-Nearest Neighbors, we obtain the best model when k=9, which has 68 percent accuracy. Then we use decision trees, which can analyze data and present the prediction process in visualization. After pruning our initial tree, the final decision tree can reach 80 percent accuracy. In the following part, we conduct logistic regression to analyze which variables have greater influence on people’s death, which gives our project a more practical meaning. This result can be used in the medical field to guide patients’ behaviors.
 
-More analysis such as cluster analysis and linear regression can be used to find the possible cause and better compare the socioeconomic mobility in two cities.
+From the logistic regression, we have 90% confidence that variables age, anaemia, creatinine_phosphokinase, ejection fraction, platelets, serum_creatinine, and time are statistically significant. Using the logistic regression model, we predict the probability that one will die, for each day in the testing data. We classify prediction as “risky” if the probability >30%, and “mild risk” otherwise since its accuracy only differs from 50% and 70% within 0.010. We hope that this model can help warn patients that have a high potential risk of death caused by heart failures. 
 
-## Python
-1. Check head and tail and clean data by substracting rows with any empty element so following calculations can work.
-2. Define an outlier function that detects outliers of the data.
-3. Calculate population mean, variance, standard deviations, percentage of outlier.
-4. Plot histogram of the two data sets.
-5. Fit the data using with normal distribution and find the skewness of each population.
-6. Print the results from step 3.
+
+
+## Reference
+Davide Chicco, Giuseppe Jurman: Machine learning can predict survival of patients with heart failure from serum creatinine and ejection fraction alone. BMC Medical Informatics and Decision Making 20, 16 (2020). (link)t-sheets/detail/cardiovascular-diseases-(cvds) 
+World Health Organization. (n.d.). Cardiovascular diseases (cvds). World Health Organization. Retrieved December 18, 2021, from https://www.who.int/news-room/fac
